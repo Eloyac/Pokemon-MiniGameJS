@@ -1,0 +1,79 @@
+/* Styling for the game container */
+#game-container {
+  width: 105%;
+  height: 600px;
+  border: 5px solid black;
+  position: relative;
+  background: transparent;
+}
+
+/* Styling for heading elements with id 'a' */
+#a {
+  font-family: fantasy;
+  font-size: xx-large;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  text-align: center;
+}
+
+/* Styling for the player element with id 'player' */
+#player {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  /* Additional styling properties can be added */
+}
+
+/* Styling for enemy elements with class 'enemy' */
+.enemy {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  background-image: url('siccor.gif');
+  /* Additional styling properties can be added */
+}
+
+/* Styling for bullet elements with class 'bullet' */
+.bullet {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 90%;
+  background-color: rgb(66, 155, 191);
+  -webkit-border-radius: 90%;
+  -moz-border-radius: 90%;
+  -ms-border-radius: 90%;
+  -o-border-radius: 90%;
+}
+
+/* Styling for the body element */
+body {
+  position: static;
+  background-image: url("https://images.alphacoders.com/235/235203.png");
+}
+
+/* Styling for elements with id 'Colizq' */
+#Colizq {
+  color: black;
+}
+
+/* Styling for the element with id 'score' */
+#score {
+  font-family: fantasy;
+  font-size: large;
+  width: 65px;
+  text-align: center;
+}
+
+/* Styling for elements with class 'stats' */
+#stats {
+  font-family: fantasy;
+  text-align: justify;
+}
+
+/* Styling for elements with class 'iconos' */
+#iconos {
+  margin-left: 3px;
+  width: 20px;
+  height: 20px;
+}
