@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Rift Survivors</title>
+  <meta name="description" content="Survivor de hordas con temática MOBA: elige campeón, sube de nivel, evoluciona habilidades y aguanta 15 minutos en la Grieta." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <!-- Menú principal -->
+  <section id="screen-menu" class="screen">
+    <div class="panel menu-panel">
+      <p class="eyebrow">Un survivor de la Grieta</p>
+      <h1 class="logo">Rift<span>Survivors</span></h1>
+      <p class="tagline">Elige campeón, aniquila oleadas de súbditos, evoluciona tus habilidades y resiste 15 minutos.</p>
+      <div class="menu-buttons">
+        <button id="btn-play" class="btn primary">Jugar</button>
+        <button id="btn-shop" class="btn">Mejoras</button>
+        <button id="btn-help" class="btn">Cómo jugar</button>
+      </div>
+      <div class="menu-footer">
+        <span class="gold">◆ <b data-gold>0</b></span>
+        <button id="btn-sound" class="link"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Selección de campeón -->
+  <section id="screen-select" class="screen">
+    <div class="panel wide">
+      <h2>Elige a tu campeón</h2>
+      <div class="select-layout">
+        <div id="champ-grid" class="champ-grid"></div>
+        <div id="champ-detail" class="champ-detail"></div>
+      </div>
+      <div class="row-buttons">
+        <button class="btn" data-back>Volver</button>
+        <button id="btn-start" class="btn primary">¡A la Grieta!</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tienda -->
+  <section id="screen-shop" class="screen">
+    <div class="panel wide">
+      <h2>Mejoras permanentes</h2>
+      <p class="sub">Gasta el oro que consigues en las partidas. <span class="gold">◆ <b data-gold>0</b></span></p>
+      <div id="shop-grid" class="shop-grid"></div>
+      <div class="row-buttons">
+        <button class="btn" data-back>Volver</button>
+        <button id="btn-refund" class="btn">Reembolsar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ayuda -->
+  <section id="screen-help" class="screen">
+    <div class="panel wide scroll">
+      <h2>Cómo jugar</h2>
+      <div class="help-grid">
+        <div>
+          <h4>Controles</h4>
+          <ul>
+            <li><kbd>WASD</kbd> / <kbd>Flechas</kbd>: moverse (en móvil, arrastra el dedo)</li>
+            <li><kbd>Espacio</kbd> / <kbd>F</kbd>: Destello (teletransporte corto)</li>
+            <li><kbd>R</kbd>: Definitiva (desde el nivel 6)</li>
+            <li><kbd>Esc</kbd> / <kbd>P</kbd>: pausa</li>
+            <li><kbd>1</kbd>–<kbd>3</kbd>: elegir mejora</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Reglas</h4>
+          <ul>
+            <li>Tus habilidades se lanzan solas. Tú solo te mueves y esquivas.</li>
+            <li>Recoge gemas de experiencia para subir de nivel y elegir mejoras.</li>
+            <li>Hasta 6 habilidades y 6 objetos por partida.</li>
+            <li>Cada 3 minutos aparece un jefe que suelta un cofre.</li>
+            <li>A los 15:00 llega el Leviatán del Abismo. ¡Derrótalo para ganar!</li>
+            <li>El oro se conserva entre partidas para comprar mejoras.</li>
+          </ul>
+        </div>
+      </div>
+      <h4>Evoluciones</h4>
+      <p class="sub">Sube una habilidad a nivel 5 y ten su objeto pareja: la siguiente mejora te ofrecerá su evolución.</p>
+      <table id="evo-table" class="evo-table"></table>
+      <div class="row-buttons">
+        <button class="btn" data-back>Volver</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subida de nivel / cofre -->
+  <section id="screen-levelup" class="screen overlay">
+    <div class="panel">
+      <h2 id="lu-title">¡Subes de nivel!</h2>
+      <p id="lu-sub" class="sub"></p>
+      <div id="lu-cards" class="lu-cards"></div>
+      <div class="row-buttons">
+        <button id="lu-reroll" class="btn small">Cambiar opciones</button>
+        <button id="lu-skip" class="btn small">Omitir (+10 oro)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pausa -->
+  <section id="screen-pause" class="screen overlay">
+    <div class="panel">
+      <h2>Pausa</h2>
+      <div class="pause-layout">
+        <ul id="pause-build" class="build-list"></ul>
+        <div id="pause-stats" class="stat-grid"></div>
+      </div>
+      <div class="row-buttons">
+        <button id="btn-quit" class="btn">Abandonar</button>
+        <button id="btn-resume" class="btn primary">Continuar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fin de partida -->
+  <section id="screen-gameover" class="screen overlay">
+    <div class="panel">
+      <h2 id="go-title">Derrota</h2>
+      <p id="go-sub" class="sub"></p>
+      <div id="go-stats" class="stat-grid big"></div>
+      <div class="row-buttons">
+        <button id="btn-menu" class="btn">Menú</button>
+        <button id="btn-retry" class="btn primary">Reintentar</button>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/util.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/draw.js"></script>
+  <script src="js/weapons.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>

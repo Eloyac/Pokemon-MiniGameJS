@@ -3,6 +3,10 @@
 ![image](https://github.com/Eloyac/Pokemon-MiniGameJS/assets/80268281/f5c21855-0b04-43fb-a2f1-09c73eb4b28d)
 
 
+## Rift Survivors (nuevo)
+
+En la carpeta [`rift-survivors/`](rift-survivors/) hay un juego tipo *survivor* de hordas con temática MOBA: abre `rift-survivors/index.html` en el navegador. Más detalles en su [README](rift-survivors/README.md).
+
 ## Description
 
 This is a simple Pokémon-themed mini-game built using HTML, CSS, and JavaScript. The game involves controlling a player character to avoid enemies and shoot bullets to increase the score.
