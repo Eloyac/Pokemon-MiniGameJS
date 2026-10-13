@@ -214,14 +214,30 @@
     updateGold();
   }
 
+  // Reembolso con confirmación en dos clics (sin diálogos del navegador)
+  let refundArmed = 0;
   function refundShop() {
     let total = 0;
     for (const m of D.META) {
       const lvl = RS.save.up(m.id);
       for (let i = 0; i < lvl; i++) total += m.cost * (i + 1);
     }
-    if (!total) return;
-    if (!confirm(`¿Reembolsar todas las mejoras? Recuperarás ◆ ${total}.`)) return;
+    const btn = $('#btn-refund');
+    if (!total) {
+      btn.textContent = 'Nada que reembolsar';
+      setTimeout(() => (btn.textContent = 'Reembolsar'), 1500);
+      return;
+    }
+    if (performance.now() - refundArmed > 4000) {
+      refundArmed = performance.now();
+      btn.textContent = '¿Seguro? Recuperas ◆ ' + total;
+      setTimeout(() => {
+        if (performance.now() - refundArmed >= 4000) btn.textContent = 'Reembolsar';
+      }, 4100);
+      return;
+    }
+    refundArmed = 0;
+    btn.textContent = 'Reembolsar';
     RS.save.data.gold += total;
     RS.save.data.upgrades = {};
     RS.save.write();
